@@ -1,14 +1,16 @@
-import { useState } from 'react'
-import './App.css'
+import Home from "./Home";
+import { BrowserRouter as Router, Routes, Route } from "react-router";
+import { IndexPage as ActorIndexPage } from "./modules/ModuleActor/pages/IndexPage";
 
 function App() {
-  const [title, setTitle] = useState("React Training.")
-
   return (
-    <>
-      <h1>{title}</h1>
-    </>
-  )
+    <Router>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/actors" element={<ActorIndexPage />} />
+      </Routes>
+    </Router>
+  );
 }
 
-export default App
+export default App;
