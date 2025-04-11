@@ -1,5 +1,5 @@
 import IndexLayout from '../../../layouts/IndexLayout'
-import ComponentMovieList from '../components/ComponentMovieList'
+import ComponentMovieList from '../components/MovieListCard'
 
 export const IndexPage = () => {
   return (

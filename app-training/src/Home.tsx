@@ -1,4 +1,4 @@
-import { IndexPage as MovieIndexPage } from "./modules/ModuleMovie/pages/IndexPage";
+import { IndexPage as MovieIndexPage } from "./modules/Movie/pages/IndexPage";
 
 const Home = () => {
   return (

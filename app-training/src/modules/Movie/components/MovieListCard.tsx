@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Card,
   Grid,
@@ -8,12 +9,18 @@ import {
   CardActionArea,
   Pagination,
   Box,
+  Fab,
+  Zoom,
 } from "@mui/material";
 import { useGetMoviesQuery } from "../movieApi";
-
+import AddIcon from "@mui/icons-material/Add";
+import Loading from "../../../components/Loading";
+import FetchDataError from "../../../components/FetchDataError";
 const recordsPerPage = 20;
 
 const ComponentMovieList = () => {
+  const navigate = useNavigate();
+
   const [page, setPage] = React.useState(1);
 
   const { data, error, isLoading } = useGetMoviesQuery({
@@ -22,15 +29,19 @@ const ComponentMovieList = () => {
   });
 
   const handlePageChange = (
-    event: React.ChangeEvent<unknown>,
+    _event: React.ChangeEvent<unknown>,
     value: number
   ) => {
     setPage(value);
   };
 
-  if (isLoading) return <div style={{ margin: 0 }}>Loading...</div>;
+  if (isLoading) {
+    return <Loading />;
+  }
 
-  if (error) return <div>Error loading movies</div>;
+  if (error) {
+    return <FetchDataError />;
+  }
 
   return (
     <>
@@ -43,7 +54,10 @@ const ComponentMovieList = () => {
         >
           {data?.data.map((movie) => (
             <Grid key={movie.id} item xs={2} sm={4} md={4}>
-              <Card sx={{ maxWidth: 345, margin: "15px" }}>
+              <Card
+                sx={{ width: 300, maxWidth: 300, margin: "15px" }}
+                onClick={() => navigate(`/movies/detail/${movie.id}`)}
+              >
                 <CardActionArea>
                   <CardMedia
                     component="img"
@@ -76,6 +90,22 @@ const ComponentMovieList = () => {
             color="primary"
           />
         </Box>
+
+        <Zoom in unmountOnExit>
+          <Fab
+            sx={{
+              position: "fixed",
+              bottom: 16,
+              right: 16,
+              zIndex: 1000,
+            }}
+            aria-label="Add"
+            color="primary"
+            onClick={() => navigate("/movies/create")}
+          >
+            <AddIcon />
+          </Fab>
+        </Zoom>
       </Box>
     </>
   );

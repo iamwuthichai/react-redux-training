@@ -1,4 +1,6 @@
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
+
 import {
   AppBar,
   Box,
@@ -13,30 +15,29 @@ import {
 import HomeIcon from "@mui/icons-material/Home";
 import MenuIcon from "@mui/icons-material/Menu";
 
-const pages = ["Movies", "Actors"];
-// const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const pages = [
+  {
+    key: 1,
+    pageName: "Movies",
+    url: "/movies",
+  },
+  // {
+  //   key: 2,
+  //   pageName: "Actors",
+  //   url: "/actors",
+  // },
+];
 
 function HeaderLayout() {
+  const navigate = useNavigate();
+
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
-  //   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
-  //   const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
-  //     setAnchorElUser(event.currentTarget);
-  //   };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-    alert('!!!');
-  };
-
-  //   const handleCloseUserMenu = () => {
-  //     setAnchorElUser(null);
-  //   };
 
   return (
     <AppBar position="static">
@@ -47,7 +48,7 @@ function HeaderLayout() {
             variant="h6"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            onClick={() => navigate(`/`)}
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -85,12 +86,14 @@ function HeaderLayout() {
                 horizontal: "left",
               }}
               open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
+              onClose={() => navigate(`/`)}
               sx={{ display: { xs: "block", md: "none" } }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography sx={{ textAlign: "center" }}>{page}</Typography>
+                <MenuItem key={page.key} onClick={() => navigate(page.url)}>
+                  <Typography sx={{ textAlign: "center" }}>
+                    {page.pageName}
+                  </Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -117,11 +120,11 @@ function HeaderLayout() {
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
               <Button
-                key={page}
-                onClick={handleCloseNavMenu}
+                key={page.key}
+                onClick={() => navigate(page.url)}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
-                {page}
+                {page.pageName}
               </Button>
             ))}
           </Box>
