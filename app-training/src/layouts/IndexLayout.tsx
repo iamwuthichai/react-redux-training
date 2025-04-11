@@ -1,17 +1,20 @@
-import * as React from 'react';
-import HeaderLayout from './HeaderLayout';
-import FooterLayout from './FooterLayout';
+import * as React from "react";
+import HeaderLayout from "./HeaderLayout";
+import FooterLayout from "./FooterLayout";
+import { Box } from "@mui/material";
 
 const IndexLayout = ({ children }) => {
   return (
     <>
-      <HeaderLayout />
+      <Box bgcolor={"#efefef"}>
+        <HeaderLayout />
 
-      {children}
+        {children}
 
-      <FooterLayout />
+        <FooterLayout />
+      </Box>
     </>
   );
-}
+};
 
-export default IndexLayout
+export default IndexLayout;
